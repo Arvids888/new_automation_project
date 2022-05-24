@@ -1,10 +1,11 @@
-package pageobject.pages;
+package pageobject.tvnet.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import pageobject.BaseFunc;
 
 import java.util.List;
 
@@ -38,21 +39,15 @@ public class HomePage {
         return articles.get(id);
     }
 
-    public String removeCharacters(int id) {
-        if (getTitle(id).endsWith(")")) {
-            getTitle(id).substring(getTitle(id).indexOf("(") + 1);
-        }
-        return getTitle(id);
-    }
-
     public String getTitle(int id) {
         LOGGER.info("Getting title for article with id: " + (id + 1));
-//        String removeCharaters = getTitle(id).replaceAll("[^a-zA-Z]", "");
-//        if (getTitle(id).endsWith(")")) {
-//            getTitle(id).substring(getTitle(id).indexOf("(") + 1);
-//
-//        }
-//        return getTitle(id);
+
+        if (baseFunc.getText(getArticleById(id), TITLE).endsWith(")")) {
+            String removeCharacters = baseFunc.getText(getArticleById(id), TITLE);
+            removeCharacters = removeCharacters.substring(removeCharacters.indexOf(removeCharacters), removeCharacters.indexOf("("));
+            removeCharacters = removeCharacters.substring(- 0, removeCharacters.length() - 1);
+            return removeCharacters;
+        }
         return baseFunc.getText(getArticleById(id), TITLE);
     }
 

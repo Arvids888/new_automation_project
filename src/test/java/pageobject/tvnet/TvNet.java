@@ -1,19 +1,14 @@
+package pageobject.tvnet;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import pageobject.pages.ArticlePage;
-import pageobject.pages.BaseFunc;
-import pageobject.pages.CommentPage;
-import pageobject.pages.HomePage;
-
-import java.util.List;
+import pageobject.tvnet.pages.ArticlePage;
+import pageobject.BaseFunc;
+import pageobject.tvnet.pages.CommentPage;
+import pageobject.tvnet.pages.HomePage;
 
 public class TvNet {
 //    private final By ACCEPT_COOKIES_BTN = By.xpath(".//button[@mode = 'primary']");
@@ -27,7 +22,7 @@ public class TvNet {
     private final By COMMENTS_BTN = By.xpath(".//a[contains(@class, 'item--comments')]");
 
     private final Logger LOGGER = LogManager.getLogger(this.getClass());
-    private final int ARTICLE_ID = 5;
+    private final int ARTICLE_ID = 3;
 
     private BaseFunc baseFunc;
 
@@ -62,6 +57,17 @@ public class TvNet {
 //        articlePage.openCommentsPage();
         CommentPage commentPage = articlePage.openCommentsPage();
 
+        //COMMENT PAGE
+
+        String commentPageTitle = commentPage.getTitle();
+        int commentPageCommentCount = commentPage.getCommentsCount();
+
+        LOGGER.info("Asserting titles");
+        Assertions.assertEquals(homePageTitle, articlePageTitle, "Wrong Title!");
+        LOGGER.info("Asserting comments");
+        Assertions.assertEquals(homePageCommentsCount, articlePageCommentCount, "Wrong Comments Count!");
+
+        baseFunc.closeBrowser();
 //        System.setProperty("webdriver.chrome.driver", "c://chromedriver.exe");
 //        WebDriver driver = new ChromeDriver();
 //        driver.manage().window().maximize();
